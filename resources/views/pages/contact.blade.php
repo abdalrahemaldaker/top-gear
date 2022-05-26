@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Contact | Top Gear')
+@section('title', 'Contact')
 
 @section('content')
     @include('sections.contact')
-    
 @endsection
-
