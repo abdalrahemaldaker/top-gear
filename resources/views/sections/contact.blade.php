@@ -15,6 +15,17 @@
                         <form action="/contact-us" method="POST">
                             @csrf
                             <fieldset class="row">
+
+                            @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+ 
                                 <div class="col-md-12">
                                     <div class="full field">
                                         <input type="text" placeholder="Your Name" name="name" />
