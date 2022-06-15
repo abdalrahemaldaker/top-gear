@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Color;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-       // $categories=Category::all();
-        $categories=Category::paginate(3);
-        $categories->withquerystring();
-       return view('admin.categories.index',compact('categories'));
+        $colors=Color::paginate(3);
+        $colors->withquerystring();
+       return view('admin.colors.index',compact('colors'));
     }
 
     /**
@@ -28,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.colors.create');
     }
 
     /**
@@ -40,75 +39,75 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required',
-            'capacity' => 'numeric|required'
+            'name' => 'required|string',
         ]);
         /*$category= new Category();
         $category->name=$request->name;
         $category->capacity=$request->capacity;
         $category->save();
         */
-        $category=Category::create($validated);
+        $category=Color::create($validated);
+
         session()->flash('message' , 'Added succesfuly');
         session()->flash('message-color' , 'success');
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.colors.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Color $color)
     {
-
-
-        return view('admin.categories.show', compact('category'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Color $color)
     {
-        return view('admin.categories.edit',compact('category' ));
+        return view('admin.colors.edit',compact('color' ));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Color $color)
     {
-       $validated=$request->validate([
-           'name'       => 'required',
-           'capacity'   => 'required|numeric'
-       ]);
-       $category->update($validated);
-       session()->flash('message' , 'updated succesfuly');
+        $validated=$request->validate([
+            'name'       => 'required|string',
+
+        ]);
+        $color->update($validated);
+        session()->flash('message' , 'updated succesfuly');
         session()->flash('message-color' , 'success');
-       return redirect()->route('admin.categories.index');
-    }
+        return redirect()->route('admin.colors.index');
+
+
+
+        }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Color $color)
     {
-        $category->delete();
+        $color->delete();
         session()->flash('message' , 'Deleted succesfuly');
         session()->flash('message-color' , 'warning');
-        return redirect()->route('admin.categories.index');
-
+        return redirect()->route('admin.colors.index');
     }
 }

@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Car;
 use Illuminate\Http\Request;
 use App\Models\Category;
-
-
+use App\Models\Color;
 
 class CarController extends Controller
 {
@@ -50,8 +49,9 @@ class CarController extends Controller
      */
     public function create()
     {
+        $colors=Color::all('id','name');
         $categories = Category::all(['id','name','capacity']);
-        return view('admin.cars.create' ,compact('categories'));
+        return view('admin.cars.create' ,compact('categories','colors'));
     }
 
     /**
@@ -69,21 +69,48 @@ class CarController extends Controller
             'model'         =>'required',
             'category_id'   =>'required|numeric|exists:categories,id',
             'price'         =>'required|numeric|min:1000000',
-            'color'         =>'required',
+            'colors'        =>'required_without:new_colors|array',
+            'colors.*'      =>'required|numeric|exists:colors,id',
+            'new_colors'    =>'required_without:colors|nullable|string',
             'gear_type'     =>'required',
             'is_new'        =>'boolean|nullable',
             'year'          =>'required',
             'country'       =>'required',
             'description'   =>'required',
-            'featured_image'=>'required|file|image'
+            'featured_image'=>'required|file|image',
+            'images'        =>'required|array',
+            'images.*'      =>'file|image'
 
         ]);
         $validated['is_new'] = $validated ['is_new'] ?? false;
         $validated['description']=clean($validated['description']);
         $validated['featured_image']=$request->file('featured_image')->store('/','public');
+
         //dd($request->is_new);
         $car = new Car;
         $car=Car::create($validated);
+        $car->colors()->attach($request->colors);
+        $car->addAllMediaFromRequest()->each(function($file){
+            $file->toMediaCollection();
+
+        });
+
+        if ($request->filled('newcolors')){
+            //convert string to array
+            $colors= explode(',',$request->newcolors);
+            foreach($colors as $color){
+                $color = trim($color);
+                $model=Color::firstOrCreate(['name'=> $color]);
+                $car->colors()->attach($model);
+            }
+
+            //add to colors DB
+
+
+            //attach colors to car
+
+        }
+
         /*$car->brand = $request-> brand;
         $car->model = $request-> model;
         $car->category_id = $request->category_id;
@@ -120,8 +147,9 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
+        $colors=Color::all('id','name');
         $categories=Category::all();
-        return view('admin.cars.edit',compact('car' , 'categories'));
+        return view('admin.cars.edit',compact('car' , 'categories','colors'));
     }
 
     /**
@@ -137,18 +165,21 @@ class CarController extends Controller
             'brand'         =>'required',
             'model'         =>'required',
             'price'         =>'required|numeric|min:1000000',
-            'color'         =>'required',
+            'colors'        =>'required|array',
+            'colors.*'      =>'required|exists:colors,id',
             'gear_type'     =>'required',
             'is_new'        =>'boolean|nullable',
             'year'          =>'required',
             'country'       =>'required',
             'description'   =>'required',
-            'category_id'   =>'required|numeric',
+            'category_id'   =>'required|numeric|exists:categories,id',
             'featured_image'=>'required|file|image'
 
         ]);
         $validated['featured_image']=$request->file('featured_image')->store('/','public');
         $car->update($validated);
+        $car->colors()->sync($request->colors);
+
         /*$car->brand = $request-> brand;
         $car->model = $request-> model;
         $car->price = $request-> price;

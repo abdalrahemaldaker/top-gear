@@ -50,14 +50,17 @@
                     <input type="number" min="1000000" step="500000" id="price" name="price" class="form-control">
                 </div>
             </div>
-
             <div class="form-group mb-3">
-                <label for="color">Color</label>
-                <select class="custom-select" id="color" name="color" multiple>
-                  <option selected disabled>Choose...</option>
-                  <option value="black">black</option>
-                  <option value="red">red</option>
+                <label for="color">Colors</label><br>
+                <label for="new_colors">New colors?</label>
+                <input type="text" class="form-control" id="new_colors" name="new_colors"  placeholder="new_colors" value="{{ old('new_colors') }}">
 
+
+                <select class="custom-select" id="colors" name="colors[]" multiple>
+                  <option selected disabled>Choose...</option>
+                    @foreach ($colors as $color )
+                        <option value="{{ $color->id }}">{{ $color->name }}</option>
+                    @endforeach
                 </select>
               </div>
               <div class="form-group mb-3">
@@ -98,10 +101,13 @@
                 <textarea class="form-control" id="Description" name="description" rows="5"></textarea>
               </div>
               <div class="form-group">
-                <label for="photo">Image</label>
+                <label for="photo">Featured Image</label>
                 <input type="file" class="form-control" id="featured_image" name="featured_image"  accept="image/*">
               </div>
-
+              <div class="form-group">
+                <label for="photo">Images</label>
+                <input type="file" class="form-control" id="images" name="images[]"  accept="image/*" multiple>
+              </div>
 
 
             <button type="submit" class="btn btn-primary">Submit</button>

@@ -57,7 +57,7 @@
         <td>{{$car->country}}</td>
         <td><img src="/storage/{{$car->featured_image}}" width="200px" ></td>
 
-        <td><a href="{{ route('admin.cars.edit', $car) }}"> edit</a> |  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <td><a href="{{ route('admin.cars.edit', $car) }}"> edit</a> |  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal{{ $car->id }}">
             Delete
           </button> </td>
 
@@ -66,7 +66,7 @@
 
       </tr>
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="Modal{{ $car->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">

@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Add a new category')
+@section('title', 'Edit color')
 
 @section('content')
 <section>
     <div class="container">
-        <h1>Create a category</h1>
-        <form action="{{ route('admin.categories.store') }}" method="post">
+        <h1>Edit color</h1>
+        <form action="{{ route('admin.colors.update',$color) }}" method="post">
             @csrf
+            @method('put')
             @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -18,15 +19,11 @@
             </div>
         @endif
             <div class="form-group">
-                <label for="name">name</label>
-                <input type="text" class="form-control" id="name" name="name"  placeholder="Name">
-              </div>
-
-              <div class="form-group">
-                <label for="Capacity">Capacity</label>
-                <input type="number" min="2"  id="price" name="capacity" class="form-control" placeholder="Capacity">
+                <label for="brand">name</label>
+                <input type="text" class="form-control" id="brand" name="name"  value="{{ old('name' , $color->name) }}">
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
+
       </div>
 
 

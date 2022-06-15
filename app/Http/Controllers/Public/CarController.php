@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\Category;
+use App\Models\Color;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -18,26 +20,42 @@ class CarController extends Controller
     {
     //$cars=Car::all();
     $query = Car::latest();
-        if($request->filled('q')){
+        if($request->filled('category')){
             $query->Where('category_id',"$request->category");
         }
-        if(  $request->filled('category') ){
+      /*  if($request->filled('colors')){
+            foreach ($request->colors as $color){
+                $query->Wherehas('colors' ,function(){
+                    select
+                } );
+                }
+
+            };
+*/
+
+                $query->Wherehas('colors',function( $que) use ($request){
+                    $que->where('id','in',$request->colors);
+                });
+
+
+        if(  $request->filled('q') ){
 
             $query->where(function($q) use ($request){
                 $q->Where('brand','like',"%$request->q%")
-                 ->orwhere('model','like' ,"%$request->q%" )
-                 ->orWhere('color','like',"%$request->q%");
+                 ->orwhere('model','like' ,"%$request->q%" );
+
             });
 
 
         }
-        //dd($query->toSql());
+        ($query->toSql());
         $cars=$query->paginate(3);
         $cars->withquerystring();
 
     $categories=Category::whereHas('cars')->get();
-
-    return view('public.cars.index',compact('cars' , 'categories'));
+   // dd(request());
+    $colors=Color::all();
+    return view('public.cars.index',compact('cars' , 'categories' ,'colors'));
     }
 
     /**

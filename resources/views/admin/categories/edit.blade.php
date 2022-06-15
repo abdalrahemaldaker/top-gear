@@ -26,14 +26,16 @@
               <label for="Capacity">Capacity</label>
               <input type="number" min="2"  id="price" name="capacity" class="form-control" value="{{ old('capacity' , $category->capacity) }}">
             </div>
-          </div>
+            <div class="form-group">
+             <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
       </div>
 
 
 
 
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+
           </form>
    </div>
 </section>

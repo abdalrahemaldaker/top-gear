@@ -53,13 +53,14 @@
 
             <div class="form-group mb-3">
                 <label for="color">Color</label>
-                <select class="custom-select" value={{old('color', $car->color)}} id="color" name="color" multiple>
+                <select class="custom-select" id="colors" name="colors[]" multiple>
                   <option selected disabled>Choose...</option>
-                  <option value="black" {{ old('color',$car->color)=='black' ? 'selected':'' }}>black</option>
-                  <option value="red" {{ old('color',$car->color)=='red' ? 'selected':'' }}>red</option>
-
+                    @foreach ($colors as $color )
+                        <option value="{{ $color->id }}" {{ $car->colors->contains($color->id) ? 'selected':'' }}>{{ $color->name }}  </option>
+                    @endforeach
                 </select>
               </div>
+
               <div class="form-group mb-3">
                 <label for="gear-type">Gear Type</label>
                 <select class="custom-select" value={{old('gear_type', $car->gear_type)}} id="gear-type" name="gear_type" >

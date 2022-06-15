@@ -14,11 +14,32 @@
                     <a class="nav-link" href="{{  route('home') }}">Link</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" action="{{ route('cars.index') }}" method="get" ">
+            <form class="form-inline my-2 my-lg-0" action="{{ route('cars.index') }}" method="get" >
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{ request()->q }}">
                 <input type="hidden" name="category" value="{{ request()->category }}">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
+            @auth
+
+            <ul class="navbar-nav">
+                <li class="nav-item">Hello {{ auth()->user()->name }}</li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0" action="{{ route('logout') }}" method="post">
+                @csrf
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+            @endauth
+            @guest
+            <ul class="navbar-nav ">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{  route('login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{  route('register') }}">Register</a>
+                </li>
+            </ul>
+            @endguest
         </div>
     </div>
 </nav>

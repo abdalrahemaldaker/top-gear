@@ -6,7 +6,7 @@
     <section>
         <div class="container">
             <div class="card mb-3">
-                <img class="card-img-top" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/mclaren-720s-100692982-h-1613830156.jpg?crop=1.00xw:1.00xh;0,0&resize=480:*" alt="Card image cap">
+                <img class="card-img-top" src="card-img-top" src="/storage/{{ $car->featured_image }}" alt="Card image cap">
                 <div class="card-body">
                   <h3 class="card-title">{{$car->brand .' | '. $car->model  }}</h3>
                   {{ $category=$car->category }}

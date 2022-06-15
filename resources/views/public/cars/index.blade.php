@@ -3,13 +3,22 @@
 @section('title','Car | index')
 
 @section('content')
-<section>
-<div class="container">
-    <div class="cow">
-        <div class="col-12">
-            <form action="">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <form action="">
+            <select name="colors[]" id="colors" multiple>
+                <option value="">All</option>
+                  @foreach ($colors as $color )
+                  <option value="{{ $color->id }}" {{$colors->contains($color->id) ? 'selected':''  }}>{{ $color->name }}</option>
+                  @endforeach
+              </select>
+
+
+
+
+
                 <input type="hidden" name="q"  value="{{ request()->q; }}">
-                  <select name="category" id="category">
+                <select name="category" id="category">
                     <option value="">All</option>
                       @foreach ($categories as $category )
                       <option value="{{ $category->id }}" {{$category->id==request()->category  ? 'selected' :''  }}>{{ $category->name }}</option>
@@ -17,8 +26,19 @@
                   </select>
                   <input type="submit" value="view">
             </form>
-        </div>
+
+
+
+
     </div>
+
+
+</nav>
+
+<section>
+<div class="container">
+
+
 <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -32,7 +52,8 @@
         <th scope="col">is_new</th>
         <th scope="col">year</th>
         <th scope="col">country</th>
-        <th scope="col">action</th>
+        <th scope="col">Image</th>
+
         </tr>
     </thead>
     <tbody>
@@ -52,8 +73,7 @@
         <td>{{($car->is_new == "1") ?  'new' : 'old'  }}</td>
         <td>{{$car->year}}</td>
         <td>{{$car->country}}</td>
-
-        <td><a href="{{ route('admin.cars.edit', $car) }}"> edit</a> |    <form action="{{ route('admin.cars.destroy',$car) }}" method="POST">@csrf @method('Delete')<input type="submit" value="delete"></form></td>
+        <td><img src="/storage/{{$car->featured_image}}" width="200px" ></td>
 
 
       </tr>
