@@ -4,6 +4,7 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,10 +23,13 @@ class RegisteredUserController extends Controller
             'password'  =>      'required|confirmed',
         ]);
         $user=User::create($validated);
+        event(new Registered($user));
         Auth::login($user);
+
+
         session()->flash('message' , 'registerd succesfuly');
         session()->flash('message-color' , 'success');
-
-        return redirect()->intended(route('admin.cars.index'));
+        return redirect()->route('verification.notice');
+        //return redirect()->intended(route('admin.cars.index'));
     }
 }

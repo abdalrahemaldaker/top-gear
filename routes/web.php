@@ -13,9 +13,11 @@ use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\auth\RegisteredUserController;
 use App\Http\Controllers\auth\ForgotPasswordController;
 use App\Http\Controllers\auth\ResetPasswordController;
+use App\Http\Controllers\auth\EmailVerificationController;
 use App\Http\Controllers\Public\CarController as PublicCarController;
 use App\Http\Controllers\Public\CategoryController as PublicCategoryController;
 use App\Models\Color;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,12 +39,21 @@ Route::view('/admin/cars/test', 'admin.cars.test')->name('test');
 Route::get('login',[LoginController::class, 'show'])->name('login')->middleware('guest');;
 Route::post('login',[LoginController::class, 'authenticate'])->middleware('guest');;
 
-Route::get('register',[RegisteredUserController::class, 'create'])->name('register')->middleware('auth');
-Route::post('register',[RegisteredUserController::class, 'store'])->middleware('auth');
+Route::get('register',[RegisteredUserController::class, 'create'])->name('register');
+//->middleware('auth');
+Route::post('register',[RegisteredUserController::class, 'store']);
+//->middleware('auth');
+
 Route::post('logout',[LoginController::class,'logout'])->name('logout')->middleware('auth');
 
 Route::get('/forgot-password',[ForgotPasswordController::class, 'show'])->name('forgot-password')->middleware('guest');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])->middleware('guest');
+
+Route::get('/email/verify', [EmailVerificationController::class, 'send'])->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}',[EmailVerificationController::class, 'receive'])->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification',[EmailVerificationController::class, 'resend'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
 
 Route::get('/reset-password/{token}',[ResetPasswordController::class, 'show'])->middleware('guest')->name('password.reset');
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->middleware('guest')->name('password.update');
@@ -70,6 +81,21 @@ Route::group(['as' => 'admin.' , 'prefix' => 'admin' , 'middleware' => 'auth'] ,
 
 
 
+
+
+
+// Localization:
+
+
+Route::get('/language/{locale}', function ($locale) {
+    if (! in_array($locale, ['en', 'ar'])) {
+        return redirect()->back()->with(['message'=> 'Unsupported language','message-color'=>'warning'] );
+    }
+
+    App::setLocale($locale);
+    return redirect()->route('home');
+    //
+});
 
 
 
