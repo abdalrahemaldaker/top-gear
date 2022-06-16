@@ -16,6 +16,7 @@ use App\Http\Controllers\auth\ResetPasswordController;
 use App\Http\Controllers\auth\EmailVerificationController;
 use App\Http\Controllers\Public\CarController as PublicCarController;
 use App\Http\Controllers\Public\CategoryController as PublicCategoryController;
+use App\Http\Controllers\public\LocalizationController;
 use App\Models\Color;
 use Illuminate\Support\Facades\App;
 
@@ -87,15 +88,7 @@ Route::group(['as' => 'admin.' , 'prefix' => 'admin' , 'middleware' => 'auth'] ,
 // Localization:
 
 
-Route::get('/language/{locale}', function ($locale) {
-    if (! in_array($locale, ['en', 'ar'])) {
-        return redirect()->back()->with(['message'=> 'Unsupported language','message-color'=>'warning'] );
-    }
-
-    App::setLocale($locale);
-    return redirect()->route('home');
-    //
-});
+Route::get('/language/{locale}',[LocalizationController::class, 'get'])->name('locale.change');
 
 
 

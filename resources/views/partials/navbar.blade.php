@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{  route('home') }}">Link</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{  route('locale.change',App::islocale('en') ? 'ar' : 'en') }}">language</a>
+                </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" action="{{ route('cars.index') }}" method="get" >
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{ request()->q }}">

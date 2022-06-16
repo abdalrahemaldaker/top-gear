@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
-    <title>@yield('title', 'TOPGEAR')</title>
+    <title>@yield('title', 'TOPGEAR') | </title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -44,8 +44,7 @@
         @include('partials.sidebar')
 
         @if(session()->has('message') )
-
-            <div class="alert alert-{{ session('message-color') }} alert-dismissible fade show" role="alert">
+                   <div class="alert alert-{{ session('message-color') }} alert-dismissible fade show" role="alert">
                 <strong>{{session('message') }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
