@@ -37,7 +37,7 @@
                     <label for="cpassword">Confirm password</label>
                     <input type="password" class="form-control" id="cpassword" name="password_confirmation" required placeholder="password">
                   </div>
-                  <input type="submit" class="btn btn-primary" value="Login">
+                  <input type="submit" class="btn btn-primary" value="Register">
             </form>
             </div>
           </div>

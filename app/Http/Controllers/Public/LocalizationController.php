@@ -11,12 +11,11 @@ class LocalizationController extends Controller
 
 public function get ($locale)
 {
-    if (! in_array($locale, ['en', 'ar'])) {
-        return redirect()->back()->with(['message'=> 'Unsupported language','message-color'=>'warning'] );
-    }
     session(['lang' => $locale]);
+//    dd($locale);
     App::setLocale($locale);
-    return redirect()->route('home');
+    //return redirect()->route('home');
+    return redirect()->route('home',['locale' => $locale]);
 
 }
 
