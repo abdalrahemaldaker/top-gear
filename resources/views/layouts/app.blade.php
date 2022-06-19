@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ App::currentlocale() }}" dir="{{App::islocale('ar')? 'rtl':'ltr' }}">
 
-{{ dd(app()) }}
+
 
 <head>
     <!-- basic -->

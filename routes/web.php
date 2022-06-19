@@ -8,12 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\auth\RegisteredUserController;
 use App\Http\Controllers\auth\ForgotPasswordController;
 use App\Http\Controllers\auth\ResetPasswordController;
-use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\auth\EmailVerificationController;
 //use App\Http\Controllers\auth\EmailVerificationController;
 use App\Http\Controllers\Public\CarController as PublicCarController;
 use App\Http\Controllers\Public\CategoryController as PublicCategoryController;
@@ -82,6 +83,7 @@ Route::prefix( '{locale?}')->middleware('lang')->group(function(){
             Route::resource('cars',CarController::class);
             Route::resource('categories',categoryController::class);
             Route::resource('colors',ColorController::class);
+            Route::resource('users',UserController::class);
     });
 });
 

@@ -30,7 +30,9 @@
                     <input type="password" class="form-control" id="password" name="password" required placeholder="password">
                   </div>
                   <input type="submit" class="btn btn-primary" value="Login">
-            </form>
+                  <a href="forgot-password" class="btn btn-info" role="button">{{ __('messages.abd.forgotpassword') }}</a>
+                </form>
+
             </div>
           </div>
     </div>
