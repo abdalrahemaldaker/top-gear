@@ -2,7 +2,8 @@
 
 return [
     'abd' =>[
-        'welcome' => 'Welcome'
+        'welcome'               => 'Welcome',
+        'forgotpassword'        => 'forgot password',
         ]
 
 

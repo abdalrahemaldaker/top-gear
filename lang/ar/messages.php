@@ -2,7 +2,10 @@
 
 return [
     'abd' =>[
-        'welcome' => 'مرحبا']
+        'welcome'               => 'مرحبا',
+        'forgotpassword'        => 'هل نسيت كلمة السر',
+
+        ]
 
 
 

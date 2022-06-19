@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -37,18 +38,17 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $validated = $request->validate([
-            'name'      => 'required',
-            'name_ar'   => 'required',
-            'capacity'  => 'numeric|required'
-        ]);
+        //$validated=$request->validate([   ]);
+
+        //dd($request);
         /*$category= new Category();
         $category->name=$request->name;
         $category->capacity=$request->capacity;
         $category->save();
         */
+        $validated=$request->validated();
         $category=Category::create($validated);
         session()->flash('message' , 'Added succesfuly');
         session()->flash('message-color' , 'success');
@@ -64,8 +64,8 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
 
-
         return view('admin.categories.show', compact('category'));
+
     }
 
     /**
