@@ -13,6 +13,7 @@
                 <thead class="thead-dark">
                     <th>Id</th>
                     <th>Name</th>
+                    <th>Name Arabic</th>
                     <th>Capacity</th>
                     <th>Action</th>
 

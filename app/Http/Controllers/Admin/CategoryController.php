@@ -40,8 +40,9 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required',
-            'capacity' => 'numeric|required'
+            'name'      => 'required',
+            'name_ar'   => 'required',
+            'capacity'  => 'numeric|required'
         ]);
         /*$category= new Category();
         $category->name=$request->name;
@@ -89,6 +90,7 @@ class CategoryController extends Controller
     {
        $validated=$request->validate([
            'name'       => 'required',
+           'name_ar'    => 'required',
            'capacity'   => 'required|numeric'
        ]);
        $category->update($validated);

@@ -19,8 +19,12 @@
             </div>
         @endif
             <div class="form-group">
-                <label for="brand">name</label>
-                <input type="text" class="form-control" id="brand" name="name"  value="{{ old('name' , $category->name) }}">
+                <label for="name">name</label>
+                <input type="text" class="form-control" id="name" name="name"  value="{{ old('name' , $category->name) }}">
+              </div>
+            <div class="form-group">
+                <label for="name_ar">Name Arabic</label>
+                <input type="text" class="form-control" id="name_ar" name="name_ar"  value="{{ old('name_ar' , $category->name_ar) }}">
               </div>
             <div class="form-group">
               <label for="Capacity">Capacity</label>

@@ -21,6 +21,10 @@
                 <label for="name">name</label>
                 <input type="text" class="form-control" id="name" name="name"  placeholder="Name">
               </div>
+            <div class="form-group">
+                <label for="name_ar">Name Arabic</label>
+                <input type="text" class="form-control" id="name_ar" name="name_ar"  placeholder="Name_ar">
+              </div>
 
               <div class="form-group">
                 <label for="Capacity">Capacity</label>

@@ -15,7 +15,10 @@ public function get ($locale)
 //    dd($locale);
     App::setLocale($locale);
     //return redirect()->route('home');
-    return redirect()->route('home',['locale' => $locale]);
+
+    $prev_route=app('router')->getroutes()->match(app('request')->create(url()->previous()))->getname();
+    return redirect()->route($prev_route,$locale);
+//    return redirect()->route('home',['locale' => $locale]);
 
 }
 
