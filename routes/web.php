@@ -95,7 +95,7 @@ Route::prefix( '{locale?}')->middleware('lang')->group(function(){
 // Localization:
 
 
-Route::get('/language/{locale}',[LocalizationController::class, 'get'])->name('locale.change');
+Route::get('/language/{lang}',[LocalizationController::class, 'get'])->name('locale.change');
 
 
 
