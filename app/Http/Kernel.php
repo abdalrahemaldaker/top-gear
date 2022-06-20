@@ -67,4 +67,16 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'lang'  =>  \App\Http\Middleware\SetDefaultLocaleForUrls::class,
     ];
+
+    /**
+     * The priority-sorted list of middleware.
+     *
+     * This forces non-global middleware to always be in the given order.
+     *
+     * @var string[]
+     */
+    protected $middlewarePriority = [
+        \App\Http\Middleware\SetDefaultLocaleForUrls::class,
+        \App\Http\Middleware\Authenticate::class,
+    ];
 }

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Color;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CarController extends Controller
 {
@@ -18,10 +19,19 @@ class CarController extends Controller
      */
     public function index(Request $request)
     {
+
+
     //$cars=Car::all();
     $query = Car::latest();
         if($request->filled('category')){
             $query->Where('category_id',"$request->category");
+        }
+
+        if($request->filled('colors')){
+            $carsID=DB::table('car_color')
+            ->whereIn('color_id',$request->colors)
+            ->get();
+            $query->whereIn('id',$carsID->pluck('car_id'))->get();
         }
       /*  if($request->filled('colors')){
             foreach ($request->colors as $color){
@@ -31,12 +41,12 @@ class CarController extends Controller
                 }
 
             };
-*/
+
 
                 $query->Wherehas('colors',function( $que) use ($request){
                     $que->where('id','in',$request->colors);
                 });
-
+*/
 
         if(  $request->filled('q') ){
 
