@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -38,14 +39,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $validated= $request->validate([
-            'name'      =>      'required|string',
-            'email'     =>      'required|email|unique:users',
-            'password'  =>      'required|confirmed',
-        ]);
-        $user=User::create($validated);
+        $user=User::create($request->validated());
         event(new Registered($user));
         Auth::login($user);
 
@@ -86,13 +82,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $validated=$request->validate([
-            'name'      =>      'required|string',
-            'email'     =>      'required|email',
-            'password'  =>      'confirmed',
-        ]);
-        if($validated['email']==$user->email){
-            $user->update($validated);
+        if($request->validated('email')==$user->email){
+            $user->update($request->validated());
             session()->flash('message' , 'updated succesfuly');
              session()->flash('message-color' , 'success');
              return redirect()->route('admin.users.index');

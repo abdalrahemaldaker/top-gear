@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCarRequest;
+use App\Http\Requests\updateCarRequest;
 use App\Models\Car;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -60,35 +62,19 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCarRequest $request)
     {
 
-
-       $validated= $request->validate([
-            'brand'         =>'required',
-            'model'         =>'required',
-            'category_id'   =>'required|numeric|exists:categories,id',
-            'price'         =>'required|numeric|min:1000000',
-            'colors'        =>'required_without:new_colors|array',
-            'colors.*'      =>'required|numeric|exists:colors,id',
-            'new_colors'    =>'required_without:colors|nullable|string',
-            'gear_type'     =>'required',
-            'is_new'        =>'boolean|nullable',
-            'year'          =>'required',
-            'country'       =>'required',
-            'description'   =>'required',
-            'featured_image'=>'required|file|image',
-            'images'        =>'required|array',
-            'images.*'      =>'file|image'
-
-        ]);
-        $validated['is_new'] = $validated ['is_new'] ?? false;
-        $validated['description']=clean($validated['description']);
-        $validated['featured_image']=$request->file('featured_image')->store('/','public');
+        //dd($request->validated('description'));
+        array_merge($request->validated(),array('is_new' => $request->validated('is_new')  ?? false ,'description' => clean($request->validated('description')),'featured_image' => $request->file('featured_image')->store('/','public')));
+//        $request->validated('is_new') = $request->validated('is_new')  ?? false;
+//        $request->validated('description')=clean($request->validated('description'));
+//        $request->validated('featured_image')=$request->validated()->file('featured_image')->store('/','public');
+        //$request->validated('featured_image')=$request->file('featured_image')->store('/','public');
 
         //dd($request->is_new);
         $car = new Car;
-        $car=Car::create($validated);
+        $car=Car::create($request->validated());
         $car->colors()->attach($request->colors);
         $car->addAllMediaFromRequest()->each(function($file){
             $file->toMediaCollection();
@@ -159,25 +145,11 @@ class CarController extends Controller
      * @param  \App\Models\Car  $car
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Car $car)
+    public function update(updateCarRequest $request, Car $car)
     {
-        $validated= $request->validate([
-            'brand'         =>'required',
-            'model'         =>'required',
-            'price'         =>'required|numeric|min:1000000',
-            'colors'        =>'required|array',
-            'colors.*'      =>'required|exists:colors,id',
-            'gear_type'     =>'required',
-            'is_new'        =>'boolean|nullable',
-            'year'          =>'required',
-            'country'       =>'required',
-            'description'   =>'required',
-            'category_id'   =>'required|numeric|exists:categories,id',
-            'featured_image'=>'required|file|image'
-
-        ]);
-        $validated['featured_image']=$request->file('featured_image')->store('/','public');
-        $car->update($validated);
+        //$validated['featured_image']=$request->file('featured_image')->store('/','public');
+        array_merge($request->validated(),array('description' => clean($request->validated('description')),'featured_image' => $request->file('featured_image')->store('/','public')));
+        $car->update($request->validated());
         $car->colors()->sync($request->colors);
 
         /*$car->brand = $request-> brand;

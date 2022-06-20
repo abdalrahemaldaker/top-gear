@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\updateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -86,14 +87,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(updateCategoryRequest $request, Category $category)
     {
-       $validated=$request->validate([
-           'name'       => 'required',
-           'name_ar'    => 'required',
-           'capacity'   => 'required|numeric'
-       ]);
-       $category->update($validated);
+
+       $category->update($request->validated());
        session()->flash('message' , 'updated succesfuly');
         session()->flash('message-color' , 'success');
        return redirect()->route('admin.categories.index');
