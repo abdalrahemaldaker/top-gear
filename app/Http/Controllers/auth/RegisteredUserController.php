@@ -27,7 +27,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
 
-        session()->flash('message' , 'registerd succesfuly');
+        session()->flash('message' , 'User added');
         session()->flash('message-color' , 'success');
         return redirect()->route('verification.notice');
         //return redirect()->intended(route('admin.cars.index'));
