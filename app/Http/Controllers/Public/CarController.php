@@ -27,26 +27,20 @@ class CarController extends Controller
             $query->Where('category_id',"$request->category");
         }
 
-        if($request->filled('colors')){
+       /* if($request->filled('colors')){
             $carsID=DB::table('car_color')
             ->whereIn('color_id',$request->colors)
             ->get();
             $query->whereIn('id',$carsID->pluck('car_id'))->get();
-        }
-      /*  if($request->filled('colors')){
-            foreach ($request->colors as $color){
-                $query->Wherehas('colors' ,function(){
-                    select
-                } );
-                }
-
-            };
+        }*/
+        if($request->filled('colors')){
 
 
                 $query->Wherehas('colors',function( $que) use ($request){
-                    $que->where('id','in',$request->colors);
+                    $que->whereIn('id',$request->colors);
                 });
-*/
+            }
+
 
         if(  $request->filled('q') ){
 
