@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -18,6 +19,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        //Two ways to authorize
+        /*if (! Gate::allows('access-users')) {
+            return redirect()->back()->with(['message'=>'Unauthorized action','message-color'=>'danger']);}*/
+        //Gate::authorize('access-users');
+
         $users=User::paginate(3);
         $users->withquerystring();
        return view('admin.users.index',compact('users'));
