@@ -21,7 +21,7 @@ class CarController extends Controller
     {
        // $cars= Car::all();
         //$categories=
-
+        $this->authorize('view_any',Car::class);
         $query = Car::latest();
         if($request->filled('category')){
             $query->Where('category_id',"$request->category");
@@ -147,6 +147,8 @@ class CarController extends Controller
      */
     public function update(updateCarRequest $request, Car $car)
     {
+        $this->authorize('update',$car);
+
         //$validated['featured_image']=$request->file('featured_image')->store('/','public');
         array_merge($request->validated(),array('description' => clean($request->validated('description')),'featured_image' => $request->file('featured_image')->store('/','public')));
         $car->update($request->validated());
