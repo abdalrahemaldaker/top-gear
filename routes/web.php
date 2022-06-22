@@ -42,8 +42,8 @@ Route::prefix( '{locale?}')->middleware('lang')->group(function(){
 
     Route::view('/admin/cars/test', 'admin.cars.test')->name('test');
     //auth Routes
-    Route::get('login',[LoginController::class, 'show'])->name('login')->middleware('guest');;
-    Route::post('login',[LoginController::class, 'authenticate'])->middleware('guest');;
+    Route::get('login',[LoginController::class, 'show'])->name('login')->middleware('guest');
+    Route::post('login',[LoginController::class, 'authenticate'])->middleware('guest');
 
     Route::get('register',[RegisteredUserController::class, 'create'])->name('register');
     //->middleware('auth');
@@ -83,7 +83,7 @@ Route::prefix( '{locale?}')->middleware('lang')->group(function(){
             Route::resource('cars',CarController::class);
             Route::resource('categories',categoryController::class);
             Route::resource('colors',ColorController::class);
-            Route::resource('users',UserController::class);
+            Route::resource('users',UserController::class)->middleware('is_admin');
     });
 });
 
