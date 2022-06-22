@@ -17,12 +17,20 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function __construct()
+    {
+        //Gate::authorize('access-users');
+    }
+
+
+     public function index()
     {
         //Two ways to authorize
         /*if (! Gate::allows('access-users')) {
             return redirect()->back()->with(['message'=>'Unauthorized action','message-color'=>'danger']);}*/
-        //Gate::authorize('access-users');
+
+            //Gate::authorize('access-users');
 
         $users=User::paginate(3);
         $users->withquerystring();

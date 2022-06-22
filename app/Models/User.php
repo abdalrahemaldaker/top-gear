@@ -21,10 +21,6 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
 
-    public function __construct()
-    {
-        Gate::authorize('access-users');
-    }
 
     protected $fillable = [
         'name',
