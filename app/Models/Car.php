@@ -25,6 +25,7 @@ protected $attributes= [
 //protected casts to set rules when getting data from database
 protected $casts= [
     'description' => CleanHtml::class,
+
 ];
 
     public function category(){

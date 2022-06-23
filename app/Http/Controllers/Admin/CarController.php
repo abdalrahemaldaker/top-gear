@@ -9,6 +9,7 @@ use App\Models\Car;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\User;
 
 class CarController extends Controller
 {
@@ -17,10 +18,11 @@ class CarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request )
+    public function index(Request $request ,User $user)
     {
        // $cars= Car::all();
         //$categories=
+        //dd($user);
         $this->authorize('view_any',Car::class);
         $query = Car::latest();
         if($request->filled('category')){

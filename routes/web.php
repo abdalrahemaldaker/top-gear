@@ -81,7 +81,8 @@ Route::prefix( '{locale?}')->middleware('lang')->group(function(){
         Route::put('cars/{car}', [carController::class ,'update'] )->name('cars.update');
         Route::delete('cars/{car}', [carController::class ,'destroy'] )->name('cars.destroy');*/
             Route::resource('cars',CarController::class);
-            Route::resource('categories',categoryController::class);
+            //->middleware('can:create_user')
+            Route::resource('categories',categoryController::class)->middleware('can:create_user');
             Route::resource('colors',ColorController::class);
             Route::resource('users',UserController::class)->middleware('is_admin');
     });
