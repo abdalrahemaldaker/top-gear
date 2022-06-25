@@ -38,7 +38,7 @@ Route::prefix( '{locale?}')->middleware('lang')->group(function(){
 
     Route::get('/',[HomeController::class, 'welcome'])->name('home');
     Route::view('/about', 'pages.about');
-    Route::view('/contact-us', 'pages.contact');
+    Route::view('/contact-us', 'pages.contact')->name('contact-us');
 
     Route::view('/admin/cars/test', 'admin.cars.test')->name('test');
     //auth Routes
@@ -82,7 +82,8 @@ Route::prefix( '{locale?}')->middleware('lang')->group(function(){
         Route::delete('cars/{car}', [carController::class ,'destroy'] )->name('cars.destroy');*/
             Route::resource('cars',CarController::class);
             //->middleware('can:create_user')
-            Route::resource('categories',categoryController::class)->middleware('can:create_user');
+            Route::resource('categories',categoryController::class);
+            //->middleware('can:create_user')
             Route::resource('colors',ColorController::class);
             Route::resource('users',UserController::class)->middleware('is_admin');
     });

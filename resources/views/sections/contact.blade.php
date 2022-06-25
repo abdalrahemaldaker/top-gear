@@ -12,7 +12,7 @@
             <div class="col-md-6">
                 <div class="full">
                     <div class="contact_form">
-                        <form action="/contact-us" method="POST">
+                        <form action="{{ route('contact-us') }}" method="POST">
                             @csrf
                             <fieldset class="row">
 
@@ -25,7 +25,7 @@
         </ul>
     </div>
 @endif
- 
+
                                 <div class="col-md-12">
                                     <div class="full field">
                                         <input type="text" placeholder="Your Name" name="name" />
