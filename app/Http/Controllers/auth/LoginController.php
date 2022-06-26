@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Notifications\LoggedIn;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+    use Notifiable;
     public function show(){
         return view('auth.login');
     }
@@ -25,6 +29,9 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            //sending email to User
+            $user=User::where('email',$credentials['email'])->first();
+            $user->notify(new LoggedIn);
             return redirect()->intended(route('admin.cars.index'));
         }
 
