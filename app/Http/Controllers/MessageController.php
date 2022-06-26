@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageReceived;
 use App\Mail\ContactThanks;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -22,9 +23,10 @@ class MessageController extends Controller
         $message->phone = $request->phone;
         $message->content = $request->content;
         $message->save();
-
+        $email=$message->email
         //sending mail
-        Mail::to($message->email)->send(new ContactThanks );
+        MessageReceived::dispatch($email);
+
 
         return redirect('/#contact');
     }
