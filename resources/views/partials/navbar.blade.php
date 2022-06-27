@@ -11,7 +11,7 @@
                     <a class="nav-link" href="{{  route('home') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{  route('home') }}">Link</a>
+                    <a class="nav-link" href="{{  route('cars.index') }}">Cars</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{  route('locale.change',App::islocale('en') ? 'ar' : 'en') }}">language</a>
