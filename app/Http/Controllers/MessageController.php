@@ -23,7 +23,7 @@ class MessageController extends Controller
         $message->phone = $request->phone;
         $message->content = $request->content;
         $message->save();
-        $email=$message->email
+        $email=$message->email;
         //sending mail
         MessageReceived::dispatch($email);
 

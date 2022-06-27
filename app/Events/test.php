@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageReceived
+class test
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,9 +19,9 @@ class MessageReceived
      *
      * @return void
      */
-    public function __construct(public string $email)
+    public function __construct()
     {
-       //
+        //
     }
 
     /**

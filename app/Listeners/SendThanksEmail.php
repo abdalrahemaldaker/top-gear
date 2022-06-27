@@ -26,8 +26,8 @@ class SendThanksEmail
      * @param  \App\Events\MessageReceived  $event
      * @return void
      */
-    public function handle(MessageReceived $event , $email)
+    public function handle(MessageReceived $event )
     {
-        Mail::to($email)->send(new ContactThanks );
+        Mail::to($event->email)->send(new ContactThanks );
     }
 }
